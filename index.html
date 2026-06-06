@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q1 Review | Tejas & Shaili</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #070714; /* Deep midnight */
+            color: #E2D9F3;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* The Astronaut Projector Effect */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #151028 0%, #070714 100%);
+        }
+
+        .star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+            opacity: 0;
+        }
+
+        .star.green {
+            background: #a3ffb4; /* Green dots from the projector */
+            box-shadow: 0 0 4px #a3ffb4;
+        }
+
+        .aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 15% 70%, rgba(255, 105, 180, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 85% 20%, rgba(138, 43, 226, 0.08) 0%, transparent 40%);
+            z-index: -1;
+            animation: drift 20s infinite alternate linear;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: var(--max-opacity); transform: scale(1); }
+        }
+
+        @keyframes drift {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.1) translate(20px, -20px); }
+        }
+
+        .container {
+            max-width: 740px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffd1ff 0%, #ff7eb3 50%, #b8a4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            color: #a89bc2;
+            font-size: 16px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        /* Glassmorphism Sections */
+        .form-section {
+            background: rgba(20, 16, 38, 0.4);
+            border: 1px solid rgba(255, 126, 179, 0.15);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .form-section:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 126, 179, 0.35);
+            box-shadow: 0 12px 40px 0 rgba(255, 126, 179, 0.08);
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #ff7eb3;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 126, 179, 0.15);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .question-group { margin-bottom: 36px; }
+        .question-group:last-child { margin-bottom: 0; }
+
+        label {
+            display: block;
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #fcfbfd;
+            line-height: 1.6;
+        }
+
+        /* Custom Glowing Sliders */
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        input[type="range"]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: var(--progress, 50%);
+            background: linear-gradient(90deg, #b8a4ff 0%, #ff7eb3 100%);
+            border-radius: 2px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffffff;
+            cursor: pointer;
+            box-shadow: 0 0 12px rgba(255, 126, 179, 0.8);
+            transition: all 0.2s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(255, 126, 179, 1);
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #8c81a6;
+            margin-top: 12px;
+            font-weight: 400;
+        }
+
+        .range-value {
+            text-align: center;
+            font-size: 14px;
+            color: #ff7eb3;
+            margin-top: 8px;
+            font-weight: 600;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Elegant Inputs */
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 126, 179, 0.15);
+            border-radius: 12px;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ff7eb3;
+            background: rgba(255, 126, 179, 0.05);
+            box-shadow: 0 0 0 4px rgba(255, 126, 179, 0.1);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #6d6387;
+        }
+
+        textarea { resize: vertical; min-height: 100px; }
+
+        /* Custom Radio Buttons */
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid rgba(255, 126, 179, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .radio-option:hover {
+            border-color: rgba(255, 126, 179, 0.4);
+            background: rgba(255, 126, 179, 0.05);
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 16px;
+            cursor: pointer;
+            accent-color: #ff7eb3;
+            width: 18px;
+            height: 18px;
+        }
+
+        .radio-option label {
+            margin-bottom: 0;
+            cursor: pointer;
+            color: #d1c8e8;
+            font-size: 15px;
+        }
+
+        /* The Button */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #ff7eb3 0%, #b8a4ff 100%);
+            color: #000000;
+            padding: 18px 48px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 24px rgba(255, 126, 179, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(255, 126, 179, 0.5);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .hidden { display: none !important; }
+
+        /* Loader */
+        #loaderContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+
+        .star-loader {
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(255, 126, 179, 0.1);
+            border-radius: 50%;
+            border-top-color: #ff7eb3;
+            border-bottom-color: #b8a4ff;
+            animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            margin-bottom: 24px;
+        }
+
+        .loader-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: #ff7eb3;
+            font-style: italic;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        /* Results Screen */
+        .result-card {
+            background: rgba(20, 16, 38, 0.5);
+            border: 1px solid rgba(255, 126, 179, 0.2);
+            border-radius: 24px;
+            padding: 56px 48px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header { text-align: center; margin-bottom: 50px; }
+        
+        .result-type-code {
+            font-size: 11px;
+            font-weight: 700;
+            color: #b8a4ff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .result-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #ffd1ff 0%, #ff7eb3 50%, #b8a4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .analysis-section { margin-bottom: 48px; }
+        
+        .analysis-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #ff7eb3;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .analysis-text {
+            color: #d1c8e8;
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .analysis-text strong { color: #ffffff; font-weight: 500; }
+        .analysis-text em { color: #ff7eb3; font-weight: 500; }
+
+        .custom-quote {
+            background: linear-gradient(90deg, rgba(255, 126, 179, 0.08) 0%, transparent 100%);
+            border-left: 3px solid #ff7eb3;
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin: 30px 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: #ffffff;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* Spectrum Bar */
+        .spectrum-container {
+            margin: 48px 0;
+            padding: 32px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 126, 179, 0.1);
+        }
+
+        .spectrum-label {
+            font-size: 12px;
+            color: #a89bc2;
+            margin-bottom: 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .spectrum-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .spectrum-bar::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 126, 179, 0.5), transparent);
+        }
+
+        .spectrum-marker {
+            width: 18px;
+            height: 18px;
+            background: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+            top: -7px;
+            transform: translateX(-50%);
+            box-shadow: 0 0 16px #ff7eb3;
+            transition: left 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .spectrum-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #8c81a6;
+        }
+
+        /* Badges */
+        .traits-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .trait-badge {
+            background: rgba(255, 126, 179, 0.05);
+            border: 1px solid rgba(255, 126, 179, 0.2);
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #e2d9f3;
+            letter-spacing: 0.5px;
+        }
+
+        .closing-section {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 126, 179, 0.15);
+        }
+
+        .btn-reset {
+            background: transparent;
+            color: #8c81a6;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            margin-top: 24px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-reset:hover { color: #ff7eb3; }
+
+        @media (max-width: 600px) {
+            .result-card { padding: 40px 24px; }
+            .traits-container { grid-template-columns: 1fr; }
+            .form-section { padding: 24px; }
+            .header h1 { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora"></div>
+    <div class="stars-container" id="starsContainer"></div>
+
+    <div class="container">
+        <div id="formContainer">
+            <div class="header">
+                <h1>Q1 Performance Review</h1>
+                <p>Three months of moving from strangers to something much more. 💕</p>
+            </div>
+
+            <form id="feedbackForm">
+                <div class="form-section">
+                    <div class="section-title">Telepathy & Anticipation</div>
+
+                    <div class="question-group">
+                        <label>How predictably "Tejas" have I been this past month?</label>
+                        <input type="range" id="q1" min="1" max="10" value="5" class="slider" oninput="updateProgress(this)">
+                        <div class="range-labels">
+                            <span>An absolute enigma</span>
+                            <span>I can practically read your mind</span>
+                        </div>
+                        <div class="range-value"><span id="q1-value">5</span>/10</div>
+                    </div>
+
+                    <div class="question-group">
+                        <label>If you had to guess my exact reaction to a minor inconvenience right now, what would it be?</label>
+                        <textarea id="q2" placeholder="Tell me what I'd say or do..."></textarea>
+                    </div>
+
+                    <div class="question-group">
+                        <label>What's a detail you've noticed about me recently that you're pretty sure nobody else has?</label>
+                        <input type="text" id="q3" placeholder="I'm curious...">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">Falling Into Sync</div>
+
+                    <div class="question-group">
+                        <label>How often do we accidentally say the exact same thing or send a text at the exact same time?</label>
+                        <input type="range" id="q4" min="1" max="10" value="5" class="slider" oninput="updateProgress(this)">
+                        <div class="range-labels">
+                            <span>Rarely</span>
+                            <span>It's getting weirdly frequent</span>
+                        </div>
+                        <div class="range-value"><span id="q4-value">5</span>/10</div>
+                    </div>
+
+                    <div class="question-group">
+                        <label>Choose the scenario that feels the most "Us" right now:</label>
+                        <div class="options-group">
+                            <div class="radio-option">
+                                <input type="radio" id="q5a" name="q5" value="call">
+                                <label for="q5a">Both wanting to stay on the phone but politely refusing to be the first to hang up</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="q5b" name="q5" value="food">
+                                <label for="q5b">Uniting over highly specific, absolutely correct culinary opinions</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="q5c" name="q5" value="vibe">
+                                <label for="q5c">Just knowing exactly what the other is feeling without having to say a word</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label>Which of our inside jokes or shared absurdities has gotten completely out of hand?</label>
+                        <input type="text" id="q6" placeholder="Spill...">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">Shared Roots & Core Values</div>
+
+                    <div class="question-group">
+                        <label>How often do you find yourself thinking "same" when I talk about how I view the world?</label>
+                        <input type="range" id="q7" min="1" max="10" value="5" class="slider" oninput="updateProgress(this)">
+                        <div class="range-labels">
+                            <span>Not often</span>
+                            <span>Basically our brains are merged</span>
+                        </div>
+                        <div class="range-value"><span id="q7-value">5</span>/10</div>
+                    </div>
+
+                    <div class="question-group">
+                        <label>What is one core value or belief you feel we completely see eye-to-eye on?</label>
+                        <textarea id="q8" placeholder="e.g., how we treat people, what we want out of life..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">Aesthetics & "My Chaos"</div>
+
+                    <div class="question-group">
+                        <label>Your current, honest stance on my aesthetic (including the pink):</label>
+                        <div class="options-group">
+                            <div class="radio-option">
+                                <input type="radio" id="q9a" name="q9" value="chaos">
+                                <label for="q9a">It's chaotic, but it's *your* chaos, and I accept it</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="q9b" name="q9" value="influence">
+                                <label for="q9b">I am slowly but surely being converted</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="q9c" name="q9" value="love">
+                                <label for="q9c">Still baffled by it, but I love you anyway</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-group">
+                        <label>What's a weird quirk of mine that you surprisingly find endearing now?</label>
+                        <input type="text" id="q10" placeholder="Be honest...">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-title">The 3-Month Mark</div>
+
+                    <div class="question-group">
+                        <label>When my name pops up on your screen, what is the immediate feeling?</label>
+                        <input type="text" id="q11" placeholder="e.g., safe, chaotic, butterflies, home...">
+                    </div>
+
+                    <div class="question-group">
+                        <label>If you could add a *fourth* question to the ones we finally asked that night in H9, what would you ask me right now?</label>
+                        <textarea id="q12" placeholder="Ask away..."></textarea>
+                    </div>
+
+                    <div class="question-group">
+                        <label>What has been your absolute favorite feeling or memory from these past three months?</label>
+                        <textarea id="q13" placeholder="Take me back to it..."></textarea>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn-submit">Generate Our Analysis ✨</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="loaderContainer" class="hidden">
+            <div class="star-loader"></div>
+            <div class="loader-text" id="loaderText">Analyzing our wavelength...</div>
+        </div>
+
+        <div id="resultContainer" class="hidden">
+            <div class="result-card">
+                <div class="result-header">
+                    <div class="result-type-code">Q1 PERFORMANCE REVIEW</div>
+                    <h1 class="result-title" id="resultTitle">The Verdict</h1>
+                    <p class="result-subtitle" style="color: #a89bc2;">Our 3-Month Diagnostic</p>
+                </div>
+
+                <div class="analysis-section">
+                    <h2 class="analysis-title">The Wavelength Report</h2>
+                    <div id="dynamicAnalysis1"></div>
+                </div>
+
+                <div class="spectrum-container">
+                    <div class="spectrum-label">Our Sync Status</div>
+                    <div class="spectrum-bar">
+                        <div class="spectrum-marker" id="spectrumMarker" style="left: 0%;"></div>
+                    </div>
+                    <div class="spectrum-labels">
+                        <span>Still Figuring It Out</span>
+                        <span>Basically One Brain</span>
+                    </div>
+                </div>
+
+                <div class="analysis-section">
+                    <h2 class="analysis-title">The Things You Noticed</h2>
+                    <div id="dynamicAnalysis2"></div>
+                </div>
+
+                <div class="analysis-section">
+                    <h2 class="analysis-title">The Core of Us</h2>
+                    <div class="traits-container" id="traitsContainer"></div>
+                </div>
+                
+                <div class="analysis-section">
+                    <h2 class="analysis-title">Looking Forward</h2>
+                    <div id="dynamicAnalysis3"></div>
+                </div>
+
+                <div class="closing-section">
+                    <div style="font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; color: #ff7eb3; letter-spacing: 0.5px;">
+                        "Not perfect. Not planned. Just falling into sync over time."
+                    </div>
+                    <button class="btn-reset" onclick="location.reload()">Return to Start</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate Starry Background (Astronaut Projector Effect)
+        function createStars() {
+            const container = document.getElementById('starsContainer');
+            const starCount = window.innerWidth < 768 ? 50 : 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 15% chance of being a green projector dot
+                if (Math.random() > 0.85) {
+                    star.classList.add('green');
+                }
+
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                
+                // Animation properties
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                star.style.setProperty('--max-opacity', `${Math.random() * 0.7 + 0.3}`);
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        // Custom Slider Fill Logic
+        function updateProgress(slider) {
+            const value = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+            slider.style.setProperty('--progress', `${value}%`);
+            document.getElementById(slider.id + '-value').textContent = slider.value;
+        }
+        
+        // Initialize sliders
+        document.querySelectorAll('.slider').forEach(slider => {
+            updateProgress(slider);
+        });
+
+        // Helper to safely get values and escape HTML
+        function escapeHtml(text) {
+            if (!text) return '';
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+
+        // TEXT ANALYSIS ENGINE
+        function analyzeInput(text) {
+            if (!text) return { type: 'empty', text: '' };
+            
+            const lower = text.toLowerCase().trim();
+            const dismissiveWords = ["none", "nothing", "idk", "i don't know", "na", "nah", "nope", "i dont", "i don't"];
+            const negativeWords = ["scared", "annoyed", "anxious", "bad", "angry", "mad", "dread", "terrified", "weirded out"];
+            
+            if (lower.length < 3 || dismissiveWords.includes(lower)) {
+                return { type: 'dismissive', text: text };
+            }
+            if (negativeWords.some(w => lower.includes(w))) {
+                return { type: 'negative', text: text };
+            }
+            return { type: 'valid', text: text };
+        }
+
+        // Main form submission
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Gather Data
+            const data = {
+                predictability: parseInt(document.getElementById('q1').value),
+                telepathy: parseInt(document.getElementById('q4').value),
+                scenario: document.querySelector('input[name="q5"]:checked')?.value || 'vibe',
+                worldview: parseInt(document.getElementById('q7').value),
+                aesthetic: document.querySelector('input[name="q9"]:checked')?.value || 'chaos',
+                
+                reaction: analyzeInput(document.getElementById('q2').value),
+                secretDetail: analyzeInput(document.getElementById('q3').value),
+                insideJoke: analyzeInput(document.getElementById('q6').value),
+                quirk: analyzeInput(document.getElementById('q10').value),
+                feeling: analyzeInput(document.getElementById('q11').value),
+                fourthQuestion: analyzeInput(document.getElementById('q12').value),
+                favoriteMemory: analyzeInput(document.getElementById('q13').value),
+            };
+
+            const syncScore = ((data.predictability + data.telepathy + data.worldview) / 30) * 100;
+
+            // Transition to Loader
+            document.getElementById('formContainer').classList.add('hidden');
+            const loader = document.getElementById('loaderContainer');
+            loader.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            const loaderTexts = [
+                "Measuring telepathic frequency...",
+                "Reviewing inside jokes...",
+                "Calculating murmuration alignment...",
+                "Finalizing our Q1 report..."
+            ];
+            let textIndex = 0;
+            const textInterval = setInterval(() => {
+                textIndex++;
+                if(textIndex < loaderTexts.length) {
+                    document.getElementById('loaderText').textContent = loaderTexts[textIndex];
+                }
+            }, 800);
+
+            // Generate Analysis
+            setTimeout(() => {
+                clearInterval(textInterval);
+                buildAnalysis(data, syncScore);
+                loader.classList.add('hidden');
+                document.getElementById('resultContainer').classList.remove('hidden');
+                
+                setTimeout(() => {
+                    const finalPosition = Math.max(15, syncScore); 
+                    document.getElementById('spectrumMarker').style.left = finalPosition + '%';
+                }, 300);
+
+            }, 3500);
+        });
+
+        function buildAnalysis(data, syncScore) {
+            const titleEl = document.getElementById('resultTitle');
+            if (syncScore >= 85) titleEl.textContent = "The Telepathic Murmuration";
+            else if (syncScore >= 65) titleEl.textContent = "The Seamless Symphony";
+            else titleEl.textContent = "The Beautiful Chaos";
+
+            let p1 = `<p class="analysis-text">Three months in, and the data confirms what I already knew: the way we are falling into sync is incredible.</p>`;
+            p1 += `<p class="analysis-text">You rated your ability to read my mind a <strong>${data.predictability}/10</strong>, and judging by how often we text at the exact same time (a <strong>${data.telepathy}/10</strong> on the synchronicity scale), you aren't wrong. `;
+            
+            if (data.scenario === 'call') {
+                p1 += `We're currently in the era of wanting to stay on the phone but refusing to hang up first. `;
+            } else if (data.scenario === 'food') {
+                p1 += `We've successfully bonded over being absolutely right about our highly specific opinions. `;
+            } else {
+                p1 += `We've hit that stage where we just inherently know the vibe without having to spell it out. `;
+            }
+            
+            p1 += `When I look at how we view the world, scoring a <strong>${data.worldview}/10</strong> in philosophical alignment, it makes sense why this feels so easy.</p>`;
+            document.getElementById('dynamicAnalysis1').innerHTML = p1;
+
+            let p2 = ``;
+            if (data.secretDetail.type === 'dismissive' || data.secretDetail.type === 'empty') {
+                p2 += `<p class="analysis-text">I asked you for a secret detail you noticed about me and you essentially gave me nothing. Wow. And here I thought you were paying attention! I guess I'll have to be more obvious in Q2.</p>`;
+            } else {
+                p2 += `<p class="analysis-text">What amazes me most is how closely you pay attention. The fact that you noticed <em>"${escapeHtml(data.secretDetail.text)}"</em> about me proves that you really *see* me.</p>`;
+            }
+            
+            if (data.quirk.type === 'dismissive' || data.quirk.type === 'empty') {
+                p2 += `<p class="analysis-text">You couldn't even think of one weird quirk you find endearing? That either means I'm flawless, or you're just keeping my flaws to yourself to spare my feelings. (I'll assume the former).</p>`;
+            } else {
+                p2 += `<p class="analysis-text">I also find it hilarious (and completely endearing) that out of everything, my quirk of <em>"${escapeHtml(data.quirk.text)}"</em> is what you've learned to appreciate. `;
+                if (data.aesthetic === 'love') p2 += `Even if you're still baffled by my chaos, you love me anyway, and I'll take that deal any day.</p>`;
+                else if (data.aesthetic === 'influence') p2 += `I know I'm slowly converting you to my aesthetic, just give it time.</p>`;
+                else p2 += `You've accepted my chaos as *my* chaos, and that means the world.</p>`;
+            }
+
+            if (data.insideJoke.type === 'valid') {
+                p2 += `<div class="custom-quote">"The fact that '${escapeHtml(data.insideJoke.text)}' has escalated to the level it has is proof of our shared insanity."</div>`;
+            } else if (data.insideJoke.type === 'dismissive') {
+                p2 += `<div class="custom-quote">"You skipped the inside joke question? Don't worry, we have plenty of material to work with anyway."</div>`;
+            }
+
+            document.getElementById('dynamicAnalysis2').innerHTML = p2;
+
+            let traits = [];
+            if (syncScore >= 80) traits.push("Basically Telepathic");
+            else traits.push("Rapidly Syncing");
+            
+            if (data.aesthetic === 'influence') traits.push("Aesthetic Influencer");
+            else traits.push("Chaos Coordinators");
+            traits.push("Distance Defiers");
+            traits.push("Shared Worldview");
+
+            document.getElementById('traitsContainer').innerHTML = traits.map(t => `<div class="trait-badge">${t}</div>`).join('');
+
+            let p3 = ``;
+            if (data.feeling.type === 'empty' || data.feeling.type === 'dismissive') {
+                p3 += `<p class="analysis-text">You didn't write down how you feel when my name pops up on your screen, but I'm just going to confidently assume it involves heart-eyes and butterflies. Seeing your name is consistently the best part of my day.</p>`;
+            } else if (data.feeling.type === 'negative') {
+                p3 += `<p class="analysis-text">You wrote that when my name pops up on your phone, you feel <strong>${escapeHtml(data.feeling.text)}</strong>. Look, I know I can be a lot sometimes, but I promise I just get really happy when I see your name on my screen.</p>`;
+            } else {
+                p3 += `<p class="analysis-text">You wrote that when my name pops up on your phone, you feel <strong>${escapeHtml(data.feeling.text)}</strong>. I want you to know the feeling is entirely mutual. Seeing your name is consistently the best part of my day.</p>`;
+            }
+
+            if (data.favoriteMemory.type === 'valid') {
+                p3 += `<p class="analysis-text">Reading your favorite memory—<em>"${escapeHtml(data.favoriteMemory.text)}"</em>—took me right back there. Those are the tiny perfect things I want to keep collecting with you.</p>`;
+            }
+
+            if (data.fourthQuestion.type === 'valid') {
+                p3 += `<p class="analysis-text">As for that fourth question you want to ask me: <em>"${escapeHtml(data.fourthQuestion.text)}"</em>...<br>I guess you'll just have to call me so I can give you the honest answer.</p>`;
+            } else {
+                p3 += `<p class="analysis-text">I'm so incredibly glad I ignored all the times you told me 'not to get attached.'</p>`;
+            }
+
+            document.getElementById('dynamicAnalysis3').innerHTML = p3;
+        }
+    </script>
+</body>
+</html>
